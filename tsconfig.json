@@ -9,7 +9,16 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "baseUrl": ".", // Đường dẫn base cho các import
     "paths": {
-      "~/*": ["src/*"] // Đường dẫn tương đối cho các import (alias)
+      "~/*": ["src/*"], // Đường dẫn tương đối cho các import (alias)
+      "~models/*": ["src/models/*"],
+      "~controllers/*": ["src/controllers/*"],
+      "~middlewares/*": ["src/middlewares/*"],
+      "~services/*": ["src/services/*"],
+      "~utils/*": ["src/utils/*"],
+      "~types/*": ["src/types/*"],
+      "~config/*": ["src/config/*"],
+      "~routes/*": ["src/routes/*"],
+      
     }
   },
   "ts-node": {
