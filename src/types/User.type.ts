@@ -1,6 +1,6 @@
 export interface IRegister {
   name: string
-  number: string
+  mobile: string
   email: string
   password: string
 }

@@ -23,7 +23,7 @@ var userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: 'user',
+      default: 'user'
     },
     cart: {
       type: Array,
@@ -62,6 +62,8 @@ var userSchema = new mongoose.Schema(
     timestamps: true
   }
 )
+
+
 
 //Export the model
 module.exports = mongoose.model('User', userSchema)

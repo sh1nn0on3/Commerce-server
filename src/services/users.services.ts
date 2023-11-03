@@ -1,19 +1,28 @@
 import { IRegister } from '~/types'
-export const registerService = async (data: IRegister) => {
-  return new Promise((resolve, reject) => {
-    try {
-      const { name, number, email, password } = data
-      if (!name || !number || !email || !password) {
-        return resolve({
-          status: 400,
-          message: 'Please enter all fields'
-        })
-      }
-    } catch (err: any) {
-      return reject({
-        status: 500,
-        message: err.message
-      })
+import bcrypt from 'bcrypt'
+
+const User = require('~models/User')
+
+export const RegisterService = async (dataBody: IRegister) => {
+  const { name, mobile, email, password } = dataBody
+  if (!name || !mobile || !email || !password) {
+    return {
+      status: 200,
+      message: 'Please enter all fields'
     }
-  })
+  }
+  const salt = bcrypt.genSaltSync(10)
+  const hash = bcrypt.hashSync(password, salt)
+  const dataInsert = {
+    name: name,
+    email: email,
+    mobile: mobile,
+    password: hash
+  }
+  const response = await User.create(dataInsert)
+  return {
+    status: 200,
+    message: 'User registered',
+    data: response
+  }
 }

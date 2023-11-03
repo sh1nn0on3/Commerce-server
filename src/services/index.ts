@@ -1,3 +1,3 @@
-import { registerService } from '~services/users.services'
+import { RegisterService } from '~services/users.services'
 
-export { registerService }
+export { RegisterService }
