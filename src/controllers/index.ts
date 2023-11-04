@@ -1,7 +1,8 @@
-import { Register } from './users.controllers'
+import { Register, Login } from './users.controllers'
 
 const Controllers = {
-    register : Register
+  register: Register,
+  login: Login
 }
 
 export default Controllers

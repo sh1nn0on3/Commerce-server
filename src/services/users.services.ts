@@ -7,8 +7,15 @@ export const RegisterService = async (dataBody: IRegister) => {
   const { name, mobile, email, password } = dataBody
   if (!name || !mobile || !email || !password) {
     return {
-      status: 200,
+      status: 400,
       message: 'Please enter all fields'
+    }
+  }
+  const user = await User.findOne({ email })
+  if (user) {
+    return {
+      status: 400,
+      message: 'User already exists'
     }
   }
   const salt = bcrypt.genSaltSync(10)
@@ -24,5 +31,35 @@ export const RegisterService = async (dataBody: IRegister) => {
     status: 200,
     message: 'User registered',
     data: response
+  }
+}
+
+export const LoginService = async (dataBody: IRegister) => {
+  const { email, password } = dataBody
+  if (!email || !password) {
+    return {
+      status: 400,
+      message: 'Please enter all fields'
+    }
+  }
+  const user = await User.findOne({ email })
+  if (!user) {
+    return {
+      status: 400,
+      message: 'User does not exists'
+    }
+  }
+  const isMatch = bcrypt.compareSync(password, user.password)
+  if (!isMatch) {
+    return {
+      status: 400,
+      message: 'Invalid credentials'
+    }
+  } else {
+    return {
+      status: 200,
+      message: 'User logged in',
+      data: user
+    }
   }
 }
