@@ -19,12 +19,6 @@ const GenerateRefreshToken = (id: string) => {
   return encodedToken
 }
 
-// const VerifyAccessToken = ( token: string) => {
-//   const decodedToken = jwt.verify(token, process.env.JWT_SECRET as Secret, (err, decoded) => {
-//     if (err) return { status: 401, message: 'Invalid token' }
-//     return { status: 200, message: 'Valid token', data: decoded }
-//   })
-//   return decodedToken
-// }
+
 
 export { GenerateAccessToken, GenerateRefreshToken }

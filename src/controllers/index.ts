@@ -1,10 +1,11 @@
-import { Register, Login } from './auth.controllers'
+import { Register, Login, RefreshToken } from './auth.controllers'
 import { getUser } from './user.controller'
 
 const Controllers = {
   register: Register,
   login: Login,
-  getUser: getUser
+  getUser: getUser,
+  refreshToken: RefreshToken
 }
 
 export default Controllers

@@ -1,6 +1,9 @@
+import Jwt from 'jsonwebtoken'
 import { Request, Response } from 'express'
+import { GenerateAccessToken, GenerateRefreshToken } from '~/middlewares/auth.middleware'
 import { LoginService, RegisterService } from '~/services/auth.services'
 import { IResponse } from '~/types'
+import { DecodeBase64 } from '~/utils/base64'
 
 const User = require('~models/User')
 const asyncHandle = require('express-async-handler')
@@ -22,4 +25,21 @@ const Login = asyncHandle(async (req: Request, res: Response) => {
     .json({ sucess: response.status === 200 ? true : false, msg: response.message, data: response.data })
 })
 
-export { Register, Login }
+const RefreshToken = asyncHandle(async (req: Request, res: Response) => {
+  const refreshToken = req.cookies.refreshToken
+  const decodedToken = DecodeBase64(refreshToken)
+  if (!decodedToken) return res.status(401).json({ sucess: false, msg: 'No token provided' })
+  Jwt.verify(decodedToken, process.env.JWT_SECRET as string, async (err, decoded) => {
+    if (err) return res.status(401).json({ sucess: false, msg: 'Token Die ' })
+    const { id }: any = decoded
+    const user = await User.findOne({ _id: id, refreshToken: refreshToken })
+    if (!user) return res.status(401).json({ sucess: false, msg: 'Invalid token' })
+    const accessToken = GenerateAccessToken(user._id, user.role, user.name)
+    const newRefreshToken = GenerateRefreshToken(user._id)
+    return res
+      .status(200)
+      .json({ sucess: true, msg: 'Token refreshed', data: { accessToken, refreshToken: newRefreshToken } })
+  })
+})
+
+export { Register, Login, RefreshToken }
