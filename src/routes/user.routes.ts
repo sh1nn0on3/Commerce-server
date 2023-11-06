@@ -5,6 +5,9 @@ import middlewares from '~/middlewares'
 const router = Router()
 router.get('/getuser', middlewares.VerifyAccessToken, Controllers.getUser)
 
-router.put('/updateuser', Controllers.refreshToken)
+
+router.put("/logout", Controllers.logout)
+
+router.put('/refreshtoken', Controllers.refreshToken)
 
 export default router

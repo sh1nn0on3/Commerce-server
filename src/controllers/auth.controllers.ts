@@ -27,8 +27,8 @@ const Login = asyncHandle(async (req: Request, res: Response) => {
 
 const RefreshToken = asyncHandle(async (req: Request, res: Response) => {
   const refreshToken = req.cookies.refreshToken
+  if (!refreshToken) return res.status(401).json({ sucess: false, msg: 'No token provided' })
   const decodedToken = DecodeBase64(refreshToken)
-  if (!decodedToken) return res.status(401).json({ sucess: false, msg: 'No token provided' })
   Jwt.verify(decodedToken, process.env.JWT_SECRET as string, async (err, decoded) => {
     if (err) return res.status(401).json({ sucess: false, msg: 'Token Die ' })
     const { id }: any = decoded
@@ -36,10 +36,27 @@ const RefreshToken = asyncHandle(async (req: Request, res: Response) => {
     if (!user) return res.status(401).json({ sucess: false, msg: 'Invalid token' })
     const accessToken = GenerateAccessToken(user._id, user.role, user.name)
     const newRefreshToken = GenerateRefreshToken(user._id)
+    await User.findByIdAndUpdate(user._id, { refreshToken: newRefreshToken }, { new: true })
+    res.cookie('refreshToken', newRefreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 })
     return res
       .status(200)
       .json({ sucess: true, msg: 'Token refreshed', data: { accessToken, refreshToken: newRefreshToken } })
   })
 })
 
-export { Register, Login, RefreshToken }
+const Logout = asyncHandle(async (req: Request, res: Response) => {
+  const refreshToken = req.cookies.refreshToken
+  if (!refreshToken) return res.status(401).json({ sucess: false, msg: 'No token provided' })
+  const decodedToken = DecodeBase64(refreshToken)
+  Jwt.verify(decodedToken, process.env.JWT_SECRET as string, async (err, decoded) => {
+    if (err) return res.status(401).json({ sucess: false, msg: 'Token Die ' })
+    const { id }: any = decoded
+    const user = await User.findOne({ _id: id, refreshToken: refreshToken })
+    if (!user) return res.status(401).json({ sucess: false, msg: 'Invalid token' })
+    await User.findByIdAndUpdate(user._id, { refreshToken: '' }, { new: true })
+    res.cookie('refreshToken', '', { httpOnly: true, maxAge: 0 })
+    return res.status(200).json({ sucess: true, msg: 'User logged out' })
+  })
+})
+
+export { Register, Login, RefreshToken, Logout }
