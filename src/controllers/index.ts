@@ -1,13 +1,16 @@
 import { Register, Login, RefreshToken, Logout } from './auth.controllers'
-import { getUser, getUsers } from './user.controller'
+import { deleteUser, getUser, getUsers, updateUser, updateUserByAdmin } from './user.controller'
 
 const Controllers = {
   register: Register,
   login: Login,
+  refreshToken: RefreshToken,
+  logout: Logout,
   getUser: getUser,
   getUsers: getUsers,
-  refreshToken: RefreshToken,
-  logout: Logout
+  deleteUser: deleteUser,
+  updateUser : updateUser,
+  updateUserByAdmin : updateUserByAdmin,
 }
 
 export default Controllers

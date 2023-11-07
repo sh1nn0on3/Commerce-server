@@ -20,7 +20,13 @@ export const RegisterService = async (dataBody: IRegister) => {
     password: hash
   }
   const response = await User.create(dataInsert)
-  return { status: 200, message: 'User registered', data: response }
+  const data = {
+    _id: response._id,
+    name: response.name,
+    email: response.email,
+    mobile: response.mobile
+  }
+  return { status: 200, message: 'User registered', data: data }
 }
 
 export const LoginService = async (dataBody: IRegister) => {
@@ -32,9 +38,17 @@ export const LoginService = async (dataBody: IRegister) => {
 
   const isMatch = bcrypt.compareSync(password, user.password)
   if (!isMatch) return { status: 400, message: 'Invalid credentials' }
-
   const accessToken = GenerateAccessToken(user._id, user.role, user.name)
   const refreshToken = GenerateRefreshToken(user._id)
   await User.findByIdAndUpdate(user._id, { refreshToken }, { new: true })
-  return { status: 200, message: 'User logged in', data: { accessToken, refreshToken, user } }
+
+  const dataUser = {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    mobile: user.mobile,
+    role: user.role
+  }
+
+  return { status: 200, message: 'User logged in', data: { accessToken, refreshToken, dataUser } }
 }
