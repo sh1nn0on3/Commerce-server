@@ -1,12 +1,12 @@
+const User = require('~models/User')
+const asyncHandle = require('express-async-handler')
+
 import Jwt from 'jsonwebtoken'
 import { Request, Response } from 'express'
 import { GenerateAccessToken, GenerateRefreshToken } from '~/middlewares/auth.middleware'
 import { LoginService, RegisterService } from '~/services/auth.services'
 import { IResponse } from '~/types'
 import { DecodeBase64 } from '~/utils/base64'
-
-const User = require('~models/User')
-const asyncHandle = require('express-async-handler')
 
 const Register = asyncHandle(async (req: Request, res: Response) => {
   const response: IResponse = await RegisterService(req.body)
