@@ -10,8 +10,10 @@ const getUser = asyncHandler(async (req: Request, res: Response | any) => {
   return res.status(200).json({ sucess: true, msg: 'User found', data: user })
 })
 
+const getUsers = asyncHandler(async (req: Request, res: Response | any) => {
+  const user = await User.find().select('-password -role -refreshToken -__v')
+  if (!user) return res.status(404).json({ sucess: false, msg: 'User not found' })
+  return res.status(200).json({ sucess: true, msg: 'User found', data: user })
+})
 
-
-
-
-export { getUser }
+export { getUser, getUsers }

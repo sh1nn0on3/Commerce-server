@@ -1,10 +1,11 @@
 import { notFound, errorHandler } from './error.middleware'
-import { VerifyAccessToken } from './verifyToken.middleware'
+import { VerifyAccessToken, isAdmin } from './verifyToken.middleware'
 
 const middlewares = {
   notFound,
   errorHandler,
-  VerifyAccessToken
+  VerifyAccessToken,
+  isAdmin
 }
 
 export default middlewares
