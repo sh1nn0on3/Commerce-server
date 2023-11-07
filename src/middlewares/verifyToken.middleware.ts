@@ -15,7 +15,6 @@ const VerifyAccessToken = asyncHandler(async (req: Request, res: Response | any,
 })
 
 const isAdmin = asyncHandler(async (req: Request, res: Response | any, next: NextFunction) => {
-  console.log(req.body.userId)
   const { role } = req.body.userId
   if (role !== 'admin') return res.status(401).json({ sucess: false, msg: 'Unauthorized' })
   next()

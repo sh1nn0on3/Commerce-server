@@ -4,7 +4,10 @@ import middlewares from '~/middlewares'
 
 const router = Router()
 
-router.get('/getuser', Controllers.getUser)
-router.get('/getusers', middlewares.isAdmin, Controllers.getUsers)
+// user
+router.get('/profile', Controllers.getUser)
+
+//admin
+router.get('/total', middlewares.isAdmin, Controllers.getUsers)
 
 export default router
