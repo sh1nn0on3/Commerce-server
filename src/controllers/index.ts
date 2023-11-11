@@ -1,6 +1,8 @@
 import { Register, Login, RefreshToken, Logout } from './auth.controllers'
 import { createBlog, deleteBlog, dislikeBlog, getBlog, getBlogById, likeBlog, updateBlog } from './blog.controller'
 import { createBlogCategory, deleteBlogCategory, getBlogCategory, updateBlogCategory } from './blogCategory.controller'
+import { createBrand, deleteBrand, getBrand, updateBrand } from './brand.controller'
+import { createCoupon, deleteCoupon, getCoupon, updateCoupon } from './coupon.controller'
 import { createProduct, deleteProduct, getProduct, getProducts, ratings, updateProduct } from './product.controller'
 import {
   createProductCategory,
@@ -45,7 +47,17 @@ const Controllers = {
   updateBlog: updateBlog,
   deleteBlog: deleteBlog,
   likedBlog: likeBlog,
-  dislikeBlog: dislikeBlog
+  dislikeBlog: dislikeBlog,
+  // Brand
+  createBrand: createBrand,
+  getBrand: getBrand,
+  updateBrand: updateBrand,
+  deleteBrand: deleteBrand,
+  // Coupon
+  createCoupon: createCoupon,
+  getCoupon: getCoupon,
+  updateCoupon: updateCoupon,
+  deleteCoupon: deleteCoupon
 }
 
 export default Controllers
