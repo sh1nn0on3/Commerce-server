@@ -37,7 +37,7 @@ const updateUser = asyncHandler(async (req: Request, res: Response | any) => {
 const updateUserByAdmin = asyncHandler(async (req: Request, res: Response | any) => {
   const { id } = req.query
   if (Object.keys(req.body).length === 1) return res.status(400).json({ sucess: false, msg: 'Missing inputs' })
-  const user = await User.findByIdAndUpdate(id, req.body, { new: true }).select('-password -role -refreshToken -__v')
+  const user = await User.findByIdAndUpdate(id, req.body, { new: true }).select('-password -refreshToken -__v')
   if (!user) return res.status(404).json({ sucess: false, msg: 'Wrong ...' })
   return res.status(200).json({ sucess: true, msg: 'User found', data: user })
 })

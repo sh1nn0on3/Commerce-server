@@ -20,4 +20,4 @@ const isAdmin = asyncHandler(async (req: Request, res: Response | any, next: Nex
   next()
 })
 
-export { VerifyAccessToken , isAdmin }
+export { VerifyAccessToken, isAdmin }

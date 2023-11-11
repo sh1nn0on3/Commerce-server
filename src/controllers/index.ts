@@ -1,6 +1,12 @@
 import { Register, Login, RefreshToken, Logout } from './auth.controllers'
+import { createBlogCategory, deleteBlogCategory, getBlogCategory, updateBlogCategory } from './blogCategory.controller'
 import { createProduct, deleteProduct, getProduct, getProducts, ratings, updateProduct } from './product.controller'
-import { createProductCategory } from './productCategory.controller'
+import {
+  createProductCategory,
+  deleteProductCategory,
+  getProductCategory,
+  updateProductCategory
+} from './productCategory.controller'
 import { deleteUser, getUser, getUsers, updateUser, updateUserByAdmin } from './user.controller'
 
 const Controllers = {
@@ -22,7 +28,15 @@ const Controllers = {
   deleteProduct: deleteProduct,
   ratings: ratings,
   // ProductCategory
-  createProductCategory: createProductCategory
+  createProductCategory: createProductCategory,
+  getProductCategory: getProductCategory,
+  updateProductCategory: updateProductCategory,
+  deleteProductCategory: deleteProductCategory,
+  // Blog Category
+  createBlogCategory: createBlogCategory,
+  getBlogCategory: getBlogCategory,
+  updateBlogCategory: updateBlogCategory,
+  deleteBlogCategory: deleteBlogCategory,
 }
 
 export default Controllers
