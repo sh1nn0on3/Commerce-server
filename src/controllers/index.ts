@@ -1,5 +1,5 @@
 import { Register, Login, RefreshToken, Logout } from './auth.controllers'
-import { createProduct, deleteProduct, getAllProducts, getProduct, getProducts, updateProduct } from './product.controller'
+import { createProduct, deleteProduct, getProduct, getProducts, ratings, updateProduct } from './product.controller'
 import { deleteUser, getUser, getUsers, updateUser, updateUserByAdmin } from './user.controller'
 
 const Controllers = {
@@ -16,10 +16,11 @@ const Controllers = {
   // Product
   createProduct: createProduct,
   getProduct: getProduct,
-  getAllProducts : getAllProducts,
   getProducts: getProducts,
   updateProduct: updateProduct,
-  deleteProduct: deleteProduct
+  deleteProduct: deleteProduct,
+  // Ratings
+  ratings: ratings
 }
 
 export default Controllers

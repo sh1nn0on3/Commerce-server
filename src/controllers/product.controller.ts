@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler')
 
 import { Request, Response } from 'express'
 import slugify from 'slugify'
+import { Rounded } from '~/utils/fixed'
 
 const createProduct = asyncHandler(async (req: Request, res: Response | any) => {
   if (Object.keys(req.body).length === 1) return res.status(400).json({ sucess: false, msg: 'Missing inputs' })
@@ -19,11 +20,11 @@ const getProduct = asyncHandler(async (req: Request, res: Response | any) => {
   else res.status(404).json({ sucess: false, msg: 'Product not found' })
 })
 
-const getAllProducts = asyncHandler(async (req: Request, res: Response | any) => {
-  const products = await Product.find()
-  if (products) res.status(200).json({ sucess: true, msg: 'Products found', data: products })
-  else res.status(404).json({ sucess: false, msg: 'Products not found' })
-})
+// const getAllProducts = asyncHandler(async (req: Request, res: Response | any) => {
+//   const products = await Product.find()
+//   if (products) res.status(200).json({ sucess: true, msg: 'Products found', data: products })
+//   else res.status(404).json({ sucess: false, msg: 'Products not found' })
+// })
 
 const getProducts = asyncHandler(async (req: Request, res: Response | any) => {
   const queries = { ...req.query }
@@ -79,4 +80,38 @@ const deleteProduct = asyncHandler(async (req: Request, res: Response | any) => 
   else res.status(404).json({ sucess: false, msg: 'Product not found' })
 })
 
-export { createProduct, getProduct, getProducts, updateProduct, deleteProduct, getAllProducts }
+const ratings = asyncHandler(async (req: Request, res: Response | any) => {
+  const { id } = req.body.userId
+  const { pid, star, comment } = req.body
+  if (!star && !comment) return res.status(400).json({ sucess: false, msg: 'Missing inputs' })
+  const product = await Product.findById(pid)
+  if (!product) return res.status(404).json({ sucess: false, msg: 'Product not found' })
+  const alreadyRated = product.ratings.find((r: any) => r.userId?.toString() === id?.toString())
+  if (alreadyRated) {
+    const updatedRating = await Product.updateOne(
+      { ratings: { $elemMatch: alreadyRated } },
+      { $set: { 'ratings.$.star': star, 'ratings.$.comment': comment } }
+    )
+    let totalRating = 0
+    product.ratings.forEach((r: any) => (totalRating += r.star))
+    const total = totalRating / product.ratings.length
+    await Product.findByIdAndUpdate(pid, { totalRating: Rounded(total) })
+    if (updatedRating) res.status(200).json({ sucess: true, msg: 'Rating updated' })
+    else res.status(400).json({ sucess: false, msg: 'Something went wrong' })
+  } else {
+    const ratingAdded = await Product.findByIdAndUpdate(
+      pid,
+      { $push: { ratings: { userId: id, star, comment } } },
+      { new: true }
+    )
+    if (ratingAdded) {
+      let totalRating = 0
+      ratingAdded.ratings.forEach((r: any) => (totalRating += r.star))
+      const total = totalRating / ratingAdded.ratings.length
+      await Product.findByIdAndUpdate(pid, { totalRating: Rounded(total) })
+      res.status(201).json({ sucess: true, msg: 'Rating added' })
+    } else res.status(400).json({ sucess: false, msg: 'Something went wrong' })
+  }
+})
+
+export { createProduct, getProduct, getProducts, updateProduct, deleteProduct, ratings }
