@@ -1,4 +1,5 @@
 import { Register, Login, RefreshToken, Logout } from './auth.controllers'
+import { createBlog, deleteBlog, dislikeBlog, getBlog, likeBlog, updateBlog } from './blog.controller'
 import { createBlogCategory, deleteBlogCategory, getBlogCategory, updateBlogCategory } from './blogCategory.controller'
 import { createProduct, deleteProduct, getProduct, getProducts, ratings, updateProduct } from './product.controller'
 import {
@@ -37,6 +38,13 @@ const Controllers = {
   getBlogCategory: getBlogCategory,
   updateBlogCategory: updateBlogCategory,
   deleteBlogCategory: deleteBlogCategory,
+  // Blog
+  createBlog: createBlog,
+  getBlog: getBlog,
+  updateBlog: updateBlog,
+  deleteBlog: deleteBlog,
+  likedBlog: likeBlog,
+  dislikeBlog: dislikeBlog
 }
 
 export default Controllers

@@ -5,6 +5,7 @@ import AuthRouter from './auth.route'
 import ProductRouter from './product.route'
 import ProductCategoryRouter from './productCategory.route'
 import BlogCategoryRouter from './blogCategory.route'
+import BlogRouter from './blog.route'
 
 const initRoutes = (app: Application) => {
   app.use('/api/v1/auth', AuthRouter)
@@ -12,6 +13,7 @@ const initRoutes = (app: Application) => {
   app.use('/api/v1/product', ProductRouter)
   app.use('/api/v1/product-category', ProductCategoryRouter)
   app.use('/api/v1/blog-category', BlogCategoryRouter)
+  app.use('/api/v1/blog', BlogRouter)
 
   app.use(middlewares.notFound)
   app.use(middlewares.errorHandler)

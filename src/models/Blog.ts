@@ -42,10 +42,16 @@ var BlogSchema = new mongoose.Schema(
     image: {
       type: String,
       default: ''
+    },
+    author: {
+      type: String,
+      default: 'admin'
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
   }
 )
 
