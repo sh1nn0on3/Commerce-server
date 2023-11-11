@@ -112,4 +112,13 @@ const dislikeBlog = asyncHandler(async (req: Request, res: Response | any) => {
   }
 })
 
-export { createBlog, getBlog, getBlogById, updateBlog, deleteBlog, likeBlog, dislikeBlog }
+const uploadImageBlog = asyncHandler(async (req: Request, res: Response | any) => {
+  const { bid } = req.query
+  if (!bid) return res.status(400).json({ sucess: false, msg: 'Please enter all fields' })
+  if (!req.file) return res.status(400).json({ sucess: false, msg: 'Please upload image' })
+  const response = await BLog.findByIdAndUpdate(bid, { image: (req.file as any).path }, { new: true })
+  if (!response) return res.status(404).json({ sucess: false, msg: 'Blog not found' })
+  return res.status(200).json({ sucess: true, msg: 'Upload image', data: response })
+})
+
+export { createBlog, getBlog, getBlogById, updateBlog, deleteBlog, likeBlog, dislikeBlog, uploadImageBlog }

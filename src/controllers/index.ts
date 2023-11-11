@@ -1,9 +1,17 @@
 import { Register, Login, RefreshToken, Logout } from './auth.controllers'
-import { createBlog, deleteBlog, dislikeBlog, getBlog, getBlogById, likeBlog, updateBlog } from './blog.controller'
+import { createBlog, deleteBlog, dislikeBlog, getBlog, getBlogById, likeBlog, updateBlog, uploadImageBlog } from './blog.controller'
 import { createBlogCategory, deleteBlogCategory, getBlogCategory, updateBlogCategory } from './blogCategory.controller'
 import { createBrand, deleteBrand, getBrand, updateBrand } from './brand.controller'
 import { createCoupon, deleteCoupon, getCoupon, updateCoupon } from './coupon.controller'
-import { createProduct, deleteProduct, getProduct, getProducts, ratings, updateProduct } from './product.controller'
+import {
+  createProduct,
+  deleteProduct,
+  getProduct,
+  getProducts,
+  ratings,
+  updateProduct,
+  uploadImageProduct
+} from './product.controller'
 import {
   createProductCategory,
   deleteProductCategory,
@@ -35,6 +43,7 @@ const Controllers = {
   getProductCategory: getProductCategory,
   updateProductCategory: updateProductCategory,
   deleteProductCategory: deleteProductCategory,
+  uploadImageProduct: uploadImageProduct,
   // Blog Category
   createBlogCategory: createBlogCategory,
   getBlogCategory: getBlogCategory,
@@ -48,6 +57,7 @@ const Controllers = {
   deleteBlog: deleteBlog,
   likedBlog: likeBlog,
   dislikeBlog: dislikeBlog,
+  uploadImageBlog : uploadImageBlog,
   // Brand
   createBrand: createBrand,
   getBrand: getBrand,

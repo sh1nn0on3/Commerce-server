@@ -114,4 +114,17 @@ const ratings = asyncHandler(async (req: Request, res: Response | any) => {
   }
 })
 
-export { createProduct, getProduct, getProducts, updateProduct, deleteProduct, ratings }
+const uploadImageProduct = asyncHandler(async (req: Request, res: Response | any) => {
+  const { pid } = req.query
+  if (!pid) return res.status(400).json({ sucess: false, msg: 'Please enter all fields' })
+  if (!req.files) return res.status(400).json({ sucess: false, msg: 'Please upload image' })
+  const response = await Product.findByIdAndUpdate(
+    pid,
+    { $push: { images: { $each: (req.files as any).map((el: any) => el.path) } } },
+    { new: true }
+  )
+  if (!response) return res.status(404).json({ sucess: false, msg: 'Product not found' })
+  return res.status(200).json({ sucess: true, msg: 'Upload image', data: response })
+})
+
+export { createProduct, getProduct, getProducts, updateProduct, deleteProduct, ratings, uploadImageProduct }
