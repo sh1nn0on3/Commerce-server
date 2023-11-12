@@ -18,7 +18,7 @@ import {
   getProductCategory,
   updateProductCategory
 } from './productCategory.controller'
-import { deleteUser, getUser, getUsers, updateUser, updateUserByAdmin } from './user.controller'
+import { deleteUser, getUser, getUsers, updateUser, updateUserAddress, updateUserByAdmin } from './user.controller'
 
 const Controllers = {
   // Auth
@@ -31,6 +31,7 @@ const Controllers = {
   deleteUser: deleteUser,
   updateUser: updateUser,
   updateUserByAdmin: updateUserByAdmin,
+  updateUserAddress : updateUserAddress,
   // Product
   createProduct: createProduct,
   getProduct: getProduct,

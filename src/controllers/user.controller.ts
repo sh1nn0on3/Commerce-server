@@ -1,4 +1,5 @@
 const User = require('~models/User')
+const Address = require('~models/Address')
 
 import { Request, Response } from 'express'
 import asyncHandler from 'express-async-handler'
@@ -42,4 +43,17 @@ const updateUserByAdmin = asyncHandler(async (req: Request, res: Response | any)
   return res.status(200).json({ sucess: true, msg: 'User found', data: user })
 })
 
-export { getUser, getUsers, deleteUser, updateUser, updateUserByAdmin }
+const updateUserAddress = asyncHandler(async (req: Request, res: Response | any) => {
+  const { id } = req.body.userId
+  const { address } = req.body
+  if (!id || !address) return res.status(400).json({ sucess: false, msg: 'Please enter all fields' })
+  const newAddress = await Address.create({ address })
+  if (!newAddress) return res.status(400).json({ sucess: false, msg: 'Something went wrong' })
+  const user = await User.findByIdAndUpdate(id, { $push: { id: newAddress._id } }, { new: true }).select(
+    '-password -role -refreshToken -__v'
+  )
+  if (!user) return res.status(404).json({ sucess: false, msg: 'Wrong ...' })
+  return res.status(200).json({ sucess: true, msg: 'User found', data: user })
+})
+
+export { getUser, getUsers, deleteUser, updateUser, updateUserByAdmin, updateUserAddress }

@@ -6,6 +6,7 @@ const router = Router()
 
 // user
 router.get('/profile', Controllers.getUser)
+router.post('/address', Controllers.updateUserAddress)
 router.put('/update', Controllers.updateUser)
 router.delete('/delete', Controllers.deleteUser)
 //admin

@@ -14,4 +14,4 @@ var AddressSchema = new mongoose.Schema(
 )
 
 //Export the model
-module.exports = mongoose.model('BlogCategory', AddressSchema)
+module.exports = mongoose.model('Address', AddressSchema)
