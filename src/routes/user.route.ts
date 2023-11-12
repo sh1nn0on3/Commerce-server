@@ -12,5 +12,6 @@ router.delete('/delete', Controllers.deleteUser)
 //admin
 router.get('/total', middlewares.isAdmin, Controllers.getUsers)
 router.put('/updateByAdmin', middlewares.isAdmin, Controllers.updateUserByAdmin)
+router.post('/updateCart', Controllers.updateCart)
 
 export default router

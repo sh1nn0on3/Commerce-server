@@ -56,4 +56,41 @@ const updateUserAddress = asyncHandler(async (req: Request, res: Response | any)
   return res.status(200).json({ sucess: true, msg: 'User found', data: user })
 })
 
-export { getUser, getUsers, deleteUser, updateUser, updateUserByAdmin, updateUserAddress }
+const updateCart = asyncHandler(async (req: Request, res: Response | any) => {
+  const { id } = req.body.userId
+  const { pid, quantity, color } = req.body
+
+  if (!pid || !quantity || !color) return res.status(400).json({ sucess: false, msg: 'Please enter all fields' })
+  const { cart } = await User.findById(id)
+  const alreadyProduct = cart.find((item: any) => item.product?.toString() === pid)
+  if (alreadyProduct === undefined) return res.status(404).json({ sucess: false, msg: 'Product not found' })
+  if (alreadyProduct) {
+    if (alreadyProduct.color === color) {
+      const response = await User.findOneAndUpdate(
+        { _id: id, 'cart.product': pid },
+        { $inc: { 'cart.$.quantity': quantity } },
+        { new: true }
+      ).select('-password -role -refreshToken -__v')
+      if (!response) return res.status(404).json({ sucess: false, msg: 'Wrong ...' })
+      return res.status(200).json({ sucess: true, msg: 'User found', data: response })
+    } else {
+      const response = await User.findOneAndUpdate(
+        { _id: id, 'cart.product': pid },
+        { $push: { cart: { product: pid, quantity, color } } },
+        { new: true }
+      ).select('-password -role -refreshToken -__v')
+      if (!response) return res.status(404).json({ sucess: false, msg: 'Wrong ...' })
+      return res.status(200).json({ sucess: true, msg: 'User found', data: response })
+    }
+  } else {
+    const response = await User.findByIdAndUpdate(
+      id,
+      { $push: { cart: { product: pid, quantity, color } } },
+      { new: true }
+    ).select('-password -role -refreshToken -__v')
+    if (!response) return res.status(404).json({ sucess: false, msg: 'Wrong ...' })
+    return res.status(200).json({ sucess: true, msg: 'User found', data: response })
+  }
+})
+
+export { getUser, getUsers, deleteUser, updateUser, updateUserByAdmin, updateUserAddress, updateCart }

@@ -1,8 +1,18 @@
 import { Register, Login, RefreshToken, Logout } from './auth.controllers'
-import { createBlog, deleteBlog, dislikeBlog, getBlog, getBlogById, likeBlog, updateBlog, uploadImageBlog } from './blog.controller'
+import {
+  createBlog,
+  deleteBlog,
+  dislikeBlog,
+  getBlog,
+  getBlogById,
+  likeBlog,
+  updateBlog,
+  uploadImageBlog
+} from './blog.controller'
 import { createBlogCategory, deleteBlogCategory, getBlogCategory, updateBlogCategory } from './blogCategory.controller'
 import { createBrand, deleteBrand, getBrand, updateBrand } from './brand.controller'
 import { createCoupon, deleteCoupon, getCoupon, updateCoupon } from './coupon.controller'
+import { createOrder, deleteOrder } from './order.controller'
 import {
   createProduct,
   deleteProduct,
@@ -18,7 +28,15 @@ import {
   getProductCategory,
   updateProductCategory
 } from './productCategory.controller'
-import { deleteUser, getUser, getUsers, updateUser, updateUserAddress, updateUserByAdmin } from './user.controller'
+import {
+  deleteUser,
+  getUser,
+  getUsers,
+  updateCart,
+  updateUser,
+  updateUserAddress,
+  updateUserByAdmin
+} from './user.controller'
 
 const Controllers = {
   // Auth
@@ -31,7 +49,8 @@ const Controllers = {
   deleteUser: deleteUser,
   updateUser: updateUser,
   updateUserByAdmin: updateUserByAdmin,
-  updateUserAddress : updateUserAddress,
+  updateUserAddress: updateUserAddress,
+  updateCart: updateCart,
   // Product
   createProduct: createProduct,
   getProduct: getProduct,
@@ -58,7 +77,7 @@ const Controllers = {
   deleteBlog: deleteBlog,
   likedBlog: likeBlog,
   dislikeBlog: dislikeBlog,
-  uploadImageBlog : uploadImageBlog,
+  uploadImageBlog: uploadImageBlog,
   // Brand
   createBrand: createBrand,
   getBrand: getBrand,
@@ -68,7 +87,10 @@ const Controllers = {
   createCoupon: createCoupon,
   getCoupon: getCoupon,
   updateCoupon: updateCoupon,
-  deleteCoupon: deleteCoupon
+  deleteCoupon: deleteCoupon,
+  // Order
+  createOrder: createOrder,
+  deleteOrder: deleteOrder,
 }
 
 export default Controllers
