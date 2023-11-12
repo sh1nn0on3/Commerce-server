@@ -12,6 +12,10 @@ var CouponSchema = new mongoose.Schema(
       type: Number,
       required: true
     },
+    numberOfCoupon: {
+      type: Number,
+      required: true
+    },
     expire: {
       type: Date,
       required: true

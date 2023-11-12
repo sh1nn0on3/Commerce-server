@@ -1,5 +1,4 @@
 const User = require('~models/User')
-const Address = require('~models/Address')
 
 import { Request, Response } from 'express'
 import asyncHandler from 'express-async-handler'
@@ -44,16 +43,16 @@ const updateUserByAdmin = asyncHandler(async (req: Request, res: Response | any)
 })
 
 const updateUserAddress = asyncHandler(async (req: Request, res: Response | any) => {
-  const { id } = req.body.userId
-  const { address } = req.body
-  if (!id || !address) return res.status(400).json({ sucess: false, msg: 'Please enter all fields' })
-  const newAddress = await Address.create({ address })
-  if (!newAddress) return res.status(400).json({ sucess: false, msg: 'Something went wrong' })
-  const user = await User.findByIdAndUpdate(id, { $push: { id: newAddress._id } }, { new: true }).select(
-    '-password -role -refreshToken -__v'
-  )
-  if (!user) return res.status(404).json({ sucess: false, msg: 'Wrong ...' })
-  return res.status(200).json({ sucess: true, msg: 'User found', data: user })
+  // const { id } = req.body.userId
+  // const { address } = req.body
+  // if (!id || !address) return res.status(400).json({ sucess: false, msg: 'Please enter all fields' })
+  // const newAddress = await Address.create({ address })
+  // if (!newAddress) return res.status(400).json({ sucess: false, msg: 'Something went wrong' })
+  // const user = await User.findByIdAndUpdate(id, { $push: { id: newAddress._id } }, { new: true }).select(
+  //   '-password -role -refreshToken -__v'
+  // )
+  // if (!user) return res.status(404).json({ sucess: false, msg: 'Wrong ...' })
+  // return res.status(200).json({ sucess: true, msg: 'User found', data: user })
 })
 
 const updateCart = asyncHandler(async (req: Request, res: Response | any) => {
@@ -63,7 +62,6 @@ const updateCart = asyncHandler(async (req: Request, res: Response | any) => {
   if (!pid || !quantity || !color) return res.status(400).json({ sucess: false, msg: 'Please enter all fields' })
   const { cart } = await User.findById(id)
   const alreadyProduct = cart.find((item: any) => item.product?.toString() === pid)
-  if (alreadyProduct === undefined) return res.status(404).json({ sucess: false, msg: 'Product not found' })
   if (alreadyProduct) {
     if (alreadyProduct.color === color) {
       const response = await User.findOneAndUpdate(

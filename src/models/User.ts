@@ -32,12 +32,7 @@ var userSchema = new mongoose.Schema(
         color: String
       }
     ],
-    address: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Address'
-      }
-    ],
+    address: String,
     wishlist: [
       {
         type: mongoose.Schema.Types.ObjectId,
