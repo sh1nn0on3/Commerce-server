@@ -12,7 +12,7 @@ import {
 import { createBlogCategory, deleteBlogCategory, getBlogCategory, updateBlogCategory } from './blogCategory.controller'
 import { createBrand, deleteBrand, getBrand, updateBrand } from './brand.controller'
 import { createCoupon, deleteCoupon, getCoupon, updateCoupon } from './coupon.controller'
-import { createOrder, deleteOrder } from './order.controller'
+import { createOrder, deleteOrder, getUserOrders, updateStatus } from './order.controller'
 import {
   createProduct,
   deleteProduct,
@@ -90,6 +90,8 @@ const Controllers = {
   deleteCoupon: deleteCoupon,
   // Order
   createOrder: createOrder,
+  updateStatus : updateStatus,
+  getUserOrders : getUserOrders,
   deleteOrder: deleteOrder,
 }
 
