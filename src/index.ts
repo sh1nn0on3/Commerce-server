@@ -1,5 +1,6 @@
 require('dotenv').config()
 import 'module-alias/register'
+import cors from 'cors'
 import express, { Request, Response } from 'express'
 import ConnectDB from '~config/connectDB'
 import initRoutes from './routes'
@@ -9,6 +10,7 @@ const port = process.env.PORT || 8080
 
 const app = express()
 app.listen(port)
+app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }))
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))

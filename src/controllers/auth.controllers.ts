@@ -16,6 +16,7 @@ const Register = asyncHandle(async (req: Request, res: Response) => {
 })
 
 const Login = asyncHandle(async (req: Request, res: Response) => {
+  console.log("🚀 ~ file: auth.controllers.ts:19 ~ Login ~ req:", req.body)
   const response: IResponse = await LoginService(req.body)
   if (response.status === 200) {
     res.cookie('refreshToken', response.data?.refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 })
